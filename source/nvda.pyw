@@ -161,7 +161,10 @@ parser.add_argument(
 # but that's far better than a major security hazzard.
 # If this option is provided, NVDA will not replace an already running instance (#10179) 
 parser.add_argument('--ease-of-access',action="store_true",dest='easeOfAccess',default=False,help="Started by Windows Ease of Access")
-(globalVars.appArgs,globalVars.appArgsExtra)=parser.parse_known_args()
+# Pre-process all options to lowercase before parsing.
+args = sys.argv[1:]
+lowerArgs = [arg.lower() if arg.startswith('-') else arg for arg in args]
+(globalVars.appArgs, globalVars.appArgsExtra) = parser.parse_known_args(args=lowerArgs)
 # Make any app args path values absolute
 # So as to not be affected by the current directory changing during process lifetime.
 pathAppArgs = [
